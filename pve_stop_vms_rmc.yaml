@@ -36,6 +36,7 @@
       name: "{{ base_name }}-jumphost"
       vmid: "{{ base_id | int + 0 }}"
       state: stopped
+      force: true
 
   - name: Stop Host1
     community.general.proxmox_kvm:
@@ -46,6 +47,7 @@
       name: "{{ base_name }}-1"
       vmid: "{{ base_id | int + 1 }}"
       state: stopped
+      force: true
 
   - name: Stop Host2
     community.general.proxmox_kvm:
@@ -56,6 +58,7 @@
       name: "{{ base_name }}-2"
       vmid: "{{ base_id | int + 2 }}"
       state: stopped
+      force: true
 
   - name: Stop Host3
     community.general.proxmox_kvm:
@@ -66,3 +69,4 @@
       name: "{{ base_name }}-3"
       vmid: "{{ base_id | int + 3 }}"
       state: stopped
+      force: true
