@@ -3,28 +3,34 @@
   gather_facts: false
 
   vars_prompt:
-    - name: api_password
-      prompt: "Enter the API password"
+    #    - name: api_password
+    #      prompt: "Enter the API password"
 
-#    api:
-#      - name: token_secret
-#        prompt: "Enter the API Token Secret"
+        #    - name: user_password
+        # prompt: "Enter the user password to be used"
+
+        #    api:
+        # - name: token_secret
+        # prompt: "Enter the API Token Secret"
+
+#      token_secret: b9e5abd5-cb03-4584-a4fa-6a92d6b30c78
 
   vars:
+    api_password: "#Munchkin1"
+    user_password: "#Munchkin1"
+
     base_id: 4100
     base_ip: "192.168.3."
     ip_last_octet: 230
     base_name: rmc-node
-    vm_template: "ubuntu-cloud"
-
     auth:
       user: "ubuntu"
       public_ssh_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM6dlqga9TQk0Y/MlWmabyteU1Q1cy4i+d+zNuX9WACs brynn@lenovo"
-
     api:
       host: proxmox
       user: root@pam
       token_id: ansible@pam!ansible-token
+    vm_template: "ubuntu-cloud"
 
   tasks:
 
@@ -84,60 +90,3 @@
       ipconfig:
         ipconfig0: "ip={{ base_ip }}{{ ip_last_octet | int + 1 }}/24,gw={{ base_ip }}1"
       update: true
-
-  - name: Clone-Host2
-    vars:
-      ansible_python_interpreter: /usr/bin/python3
-    community.general.proxmox_kvm:
-      api_host: "{{ api.host }}"
-      api_user: "{{ api.user }}"
-      api_password: "{{ api_password }}"
-      node: "{{ api.host }}"
-      clone: "{{ vm_template }}"
-      name: "{{ base_name }}-2"
-      newid: "{{ base_id | int + 2 }}"
-      state: present
-
-  - name: Update-Host2
-    community.general.proxmox_kvm:
-      api_host: "{{ api.host }}"
-      api_user: "{{ api.user }}"
-      api_password: "{{ api_password }}"
-      node: "{{ api.host }}"
-      name: "{{ base_name }}-2"
-      agent: enabled=1
-      vmid: "{{ base_id | int + 2 }}"
-      net:
-        net0: 'virtio,bridge=vmbr1'
-      ipconfig:
-        ipconfig0: "ip={{ base_ip }}{{ ip_last_octet | int + 2 }}/24,gw={{ base_ip }}1"
-      update: true
-
-  - name: Clone-Host3
-    vars:
-      ansible_python_interpreter: /usr/bin/python3
-    community.general.proxmox_kvm:
-      api_host: "{{ api.host }}"
-      api_user: "{{ api.user }}"
-      api_password: "{{ api_password }}"
-      node: "{{ api.host }}"
-      clone: "{{ vm_template }}"
-      name: "{{ base_name }}-3"
-      newid: "{{ base_id | int + 3 }}"
-      state: present
-
-  - name: Update-Host3
-    community.general.proxmox_kvm:
-      api_host: "{{ api.host }}"
-      api_user: "{{ api.user }}"
-      api_password: "{{ api_password }}"
-      node: "{{ api.host }}"
-      name: "{{ base_name }}-3"
-      agent: enabled=1
-      vmid: "{{ base_id | int + 3 }}"
-      net:
-        net0: 'virtio,bridge=vmbr1'
-      ipconfig:
-        ipconfig0: "ip={{ base_ip }}{{ ip_last_octet | int + 3 }}/24,gw={{ base_ip }}1"
-      update: true
-      
