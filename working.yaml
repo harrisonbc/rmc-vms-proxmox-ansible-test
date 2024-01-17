@@ -20,7 +20,8 @@
 #    user_password: "#Munchkin1"
 
     base_id: 4100
-    base_ip: "25"
+    base_ip: "192.168.3."
+    ip_last_octet: 250
     base_name: rmc-node
     auth:
       user: "ubuntu"
@@ -59,8 +60,8 @@
       net:
         net0: 'virtio,bridge=vmbr1'
       ipconfig:
-#        ipconfig0: 'ip=192.168.3.251/24,gw=192.168.3.1'
-        ipconfig0: "'ip=192.168.3.{{ base_ip  }}0/24,gw=192.168.3.1'"
+#        ipconfig0: "ip={{ base_ip }}{{ ip_last_octet | int + 1  }}/24,gw={{ base_ip }}.1"
+        ipconfig0: "ip={{ base_ip }}{{ ip_last_octet | int + 1  }}/24,gw={{ base_ip }}.1"
       update: true
 
 
@@ -89,6 +90,7 @@
       net:
         net0: 'virtio,bridge=vmbr1'
       ipconfig:
-        ipconfig0: "'ip=192.168.3.{{ base_ip  }}1/24,gw=192.168.3.1'"
+#        ipconfig0: "ip={{ base_ip }}{{ ip_last_octet }}1/24,gw={{ base_ip }}.1"
+        ipconfig0: "ip={{ base_ip }}{{ ip_last_octet }}1/24,gw={{ base_ip }}.1"
       update: true
 
