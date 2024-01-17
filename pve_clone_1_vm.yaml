@@ -1,0 +1,18 @@
+- hosts: all
+  become: false
+  gather_facts: false
+
+  tasks:
+
+  - name: Clone VM 1
+    community.general.proxmox_kvm:
+      api_host: proxmox
+      api_user: root@pam
+      api_password: "#Munchkin1"
+      node: proxmox
+      clone: "ubuntu-cloud"
+      name: rmc-rke2-01
+      newid: 4001
+
+  - name: SetIP 1
+    ansible.builtin.shell: 'qm set 4001 --ipconfig0 gw=192.168.3.1,ip=192.168.3.101/24,ip6=dhcp'

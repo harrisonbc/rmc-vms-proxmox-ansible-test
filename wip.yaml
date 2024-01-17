@@ -1,0 +1,50 @@
+- hosts: all
+  become: false
+  gather_facts: false
+
+  vars:
+    base_id: 4100
+    base_name: rmc-node-
+    auth:
+      user: "ubuntu"
+      password: "P@5sW0Rd"
+      public_ssh_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM6dlqga9TQk0Y/MlWmabyteU1Q1cy4i+d+zNuX9WACs brynn@lenovo"
+    api:
+      host: proxmox
+      token_id: ansible@pam!ansible-token
+      token_secret: b9e5abd5-cb03-4584-a4fa-6a92d6b30c78
+
+    vm_list:
+      - id: 4100
+        name: rmc-rke2-01
+        disk_size: 10G
+        net0: virtio,bridge=vmbr1
+        ipconfig0: 'ip=192.168.3.151/24, gw=192.168.3.1'
+      - id: 4101
+        name: rmc-rke2-01
+        disk_size: 10G
+        net0: virtio,bridge=vmbr1
+        ipconfig0: 'ip=192.168.3.151/24, gw=192.168.3.1'
+      - id: 4102
+        name: rmc-rke2-02
+        disk_size: 10G
+        net0: virtio,bridge=vmbr1
+        ipconfig0: 'ip=192.168.3.152/24, gw=192.168.3.1'
+      - id: 4103
+        name: rmc-rke2-03
+        disk_size: 10G
+        net0: virtio,bridge=vmbr1
+        ipconfig0: 'ip=192.168.3.153/24, gw=192.168.3.1'
+
+  tasks:
+
+  - name: Create new vm with minimal options
+    vars:
+      ansible_python_interpreter: /usr/bin/python3
+    proxmox_kvm:
+      api_user: {{ auth.user }}
+      api_password: {{ auth.password }}
+      api_host: {{ api_host }}
+      node: {{ api_host }}
+      name: {{  }}
+

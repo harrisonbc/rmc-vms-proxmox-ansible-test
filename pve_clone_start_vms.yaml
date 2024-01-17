@@ -1,0 +1,54 @@
+- hosts: all
+  become: false
+  gather_facts: false
+
+  tasks:
+  - name: Start VM
+    community.general.proxmox_kvm:
+      api_host: proxmox
+      api_user: root@pam
+      api_password: "#Munchkin1"
+      node: proxmox
+      name: rmc-rke2-01
+      vmid: 4001
+      state: started
+
+  - name: Start VM
+    community.general.proxmox_kvm:
+      api_host: proxmox
+      api_user: root@pam
+      api_password: "#Munchkin1"
+      node: proxmox
+      name: rmc-rke2-02
+      vmid: 4002
+      state: started
+
+  - name: Start VM
+    community.general.proxmox_kvm:
+      api_host: proxmox
+      api_user: root@pam
+      api_password: "#Munchkin1"
+      node: proxmox
+      name: rmc-rke2-03
+      vmid: 4003
+      state: started
+
+  - name: Start VM
+    community.general.proxmox_kvm:
+      api_host: proxmox
+      api_user: root@pam
+      api_password: "#Munchkin1"
+      node: proxmox
+      name: rmc-rke2-04
+      vmid: 4004
+      state: started
+
+  - name: Start VM
+    community.general.proxmox_kvm:
+      api_host: proxmox
+      api_user: root@pam
+      api_password: "#Munchkin1"
+      node: proxmox
+      name: rmc-rke2-05
+      vmid: 4005
+      state: started
