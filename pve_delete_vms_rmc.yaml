@@ -27,7 +27,7 @@
       token_id: ansible@pam!ansible-token
 
   tasks:
-  - name: Start Jumphost
+  - name: Delete Jumphost
     community.general.proxmox_kvm:
       api_host: "{{ api.host }}"
       api_user: "{{ api.user }}"
@@ -37,7 +37,7 @@
       vmid: "{{ base_id | int + 0 }}"
       state: absent
 
-  - name: Start Host1
+  - name: Delete Host1
     community.general.proxmox_kvm:
       api_host: "{{ api.host }}"
       api_user: "{{ api.user }}"
@@ -47,7 +47,7 @@
       vmid: "{{ base_id | int + 1 }}"
       state: absent
 
-  - name: Start Host2
+  - name: Delete Host2
     community.general.proxmox_kvm:
       api_host: "{{ api.host }}"
       api_user: "{{ api.user }}"
@@ -57,7 +57,7 @@
       vmid: "{{ base_id | int + 2 }}"
       state: absent
 
-  - name: Start Host3
+  - name: Delete Host3
     community.general.proxmox_kvm:
       api_host: "{{ api.host }}"
       api_user: "{{ api.user }}"
