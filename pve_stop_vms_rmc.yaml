@@ -1,0 +1,68 @@
+- hosts: all
+  become: false
+  gather_facts: false
+
+  vars_prompt:
+    - name: api_password
+      prompt: "Enter the API password"
+
+#    api:
+#      - name: token_secret
+#        prompt: "Enter the API Token Secret"
+
+  vars:
+    base_id: 4100
+    base_ip: "192.168.3."
+    ip_last_octet: 230
+    base_name: rmc-node
+    vm_template: "ubuntu-cloud"
+
+    auth:
+      user: "ubuntu"
+      public_ssh_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM6dlqga9TQk0Y/MlWmabyteU1Q1cy4i+d+zNuX9WACs brynn@lenovo"
+
+    api:
+      host: proxmox
+      user: root@pam
+      token_id: ansible@pam!ansible-token
+
+  tasks:
+  - name: Start Jumphost
+    community.general.proxmox_kvm:
+      api_host: "{{ api.host }}"
+      api_user: "{{ api.user }}"
+      api_password: "{{ api_password }}"
+      node: "{{ api.host }}"
+      name: "{{ base_name }}-jumphost"
+      vmid: "{{ base_id | int + 0 }}"
+      state: stopped
+
+  - name: Start Host1
+    community.general.proxmox_kvm:
+      api_host: "{{ api.host }}"
+      api_user: "{{ api.user }}"
+      api_password: "{{ api_password }}"
+      node: "{{ api.host }}"
+      name: "{{ base_name }}-1"
+      vmid: "{{ base_id | int + 1 }}"
+      state: stopped
+
+  - name: Start Host2
+    community.general.proxmox_kvm:
+      api_host: "{{ api.host }}"
+      api_user: "{{ api.user }}"
+      api_password: "{{ api_password }}"
+      node: "{{ api.host }}"
+      name: "{{ base_name }}-2"
+      vmid: "{{ base_id | int + 2 }}"
+      state: stopped
+
+  - name: Start Host3
+    community.general.proxmox_kvm:
+      api_host: "{{ api.host }}"
+      api_user: "{{ api.user }}"
+      api_password: "{{ api_password }}"
+      node: "{{ api.host }}"
+      name: "{{ base_name }}-3"
+      vmid: "{{ base_id | int + 3 }}"
+      state: stopped
